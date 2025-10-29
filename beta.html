@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Join the Beta Community</title>
+<meta name="description" content="Sign up to join the beta community.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{ --bg:#000; --fg:#f5f7fb; --accent:#3aa0ff; --line:rgba(255,255,255,.15) }
+  *{box-sizing:border-box} html,body{height:100%}
+  body{
+    margin:0; background:var(--bg); color:var(--fg);
+    font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .bg-image{position:fixed; inset:0; z-index:-1; pointer-events:none; background:url('psilosite2.png') center/cover no-repeat}
+  .wrap{width:100%; max-width:720px; padding:4rem 1.25rem}
+  header{text-align:center; margin-bottom:1rem}
+  h1{font-size:clamp(1.9rem,4.2vw,2.6rem); margin:.2rem 0; text-shadow:0 2px 18px rgba(0,0,0,.35)}
+  p.lead{color:#e9eef5; margin:.25rem auto 0; max-width:60ch; text-shadow:0 1px 12px rgba(0,0,0,.35)}
+  form{
+    margin-top:1rem; padding:1.25rem; border:1px solid var(--line); border-radius:16px;
+    background:rgba(0,0,0,.45); backdrop-filter:saturate(120%) blur(6px);
+  }
+  label{display:block; font-weight:600; margin:.6rem 0 .25rem}
+  input[type="email"], textarea{
+    width:100%; padding:.8rem 1rem; border-radius:12px; border:1px solid rgba(255,255,255,.18);
+    background:rgba(10,20,30,.6); color:var(--fg); outline:none;
+  }
+  textarea{min-height:120px; resize:vertical}
+  .cta{display:flex; gap:.75rem; flex-wrap:wrap; margin-top:1rem}
+  .btn{
+    border:1px solid var(--accent); background:var(--accent); color:#fff;
+    padding:.8rem 1rem; border-radius:999px; font-weight:700; letter-spacing:.01em;
+    text-decoration:none; cursor:pointer; transition:transform .2s ease, box-shadow .2s ease, background .2s ease;
+  }
+  .btn:hover{transform:translateY(-1px); box-shadow:0 0 20px rgba(58,160,255,.4); background:#5bb6ff}
+  .btn.secondary{background:#1b3a52; border-color:#1b3a52}
+  .btn.secondary:hover{background:#245477; box-shadow:0 0 20px rgba(58,160,255,.25)}
+  .fine{color:#c7d0da; font-size:.9rem; margin-top:.25rem}
+</style>
+</head>
+<body>
+  <div class="bg-image" aria-hidden="true"></div>
+  <main class="wrap" role="main">
+    <header>
+      <h1>Join the Beta Community</h1>
+      <p class="lead">Enter your email to get early access updates. You can include a short note about your interests or use case (optional).</p>
+    </header>
+
+    <form id="beta" onsubmit="return submitBeta()">
+      <label for="email">Email</label>
+      <input id="email" type="email" name="email" placeholder="you@example.com" required autocomplete="email">
+
+      <label for="note">Comment (optional)</label>
+      <textarea id="note" name="note" placeholder="Tell us anything you want us to know (optional)"></textarea>
+
+      <div class="fine">We’ll only email you about beta access and important product updates. Unsubscribe anytime.</div>
+
+      <div class="cta">
+        <button class="btn" type="submit">Request Invite</button>
+        <a class="btn secondary" href="index.html">Back to homepage</a>
+      </div>
+    </form>
+  </main>
+
+<script>
+async function submitBeta(){
+  const email = document.getElementById('email').value.trim();
+  const note = document.getElementById('note').value.trim();
+  const res = await fetch('/api/submit-beta', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ email, note })
+  });
+  if(res.ok){ alert('Thanks! You’re on the list.'); location.href='index.html'; }
+  else {
+    const t = await res.json().catch(()=>({error:'Unknown error'}));
+    alert('Error: ' + t.error);
+  }
+  return false;
+}
+</script>
+</body>
+</html>

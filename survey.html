@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Psilo Survey</title>
+<meta name="description" content="Anonymous survey about personal psilocybin use in jurisdictions where decriminalized.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#000; --fg:#f5f7fb; --muted:#a9b0b8; --accent:#3aa0ff;
+    --panel:rgba(0,0,0,.45); --line:rgba(255,255,255,.15);
+  }
+  *{box-sizing:border-box} html,body{height:100%}
+  body{margin:0; background:var(--bg); color:var(--fg); font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  .bg-image{position:fixed; inset:0; z-index:-1; pointer-events:none; background:url('psilosite2.png') center/cover no-repeat}
+  .wrap{max-width:900px; margin:0 auto; padding:4rem 1.25rem 6rem}
+  header{text-align:center; margin-bottom:1.25rem}
+  h1{font-size:clamp(1.9rem,4.2vw,2.6rem); margin:.25rem 0; text-shadow:0 2px 18px rgba(0,0,0,.35)}
+  p.lead{color:#e9eef5; margin:.25rem auto 0; max-width:62ch; text-shadow:0 1px 12px rgba(0,0,0,.35)}
+  .disclaimer{margin:1rem auto 2rem; padding:.85rem 1rem; border:1px dashed var(--line); border-radius:12px; color:#c7d0da; background:rgba(0,0,0,.35); font-size:.95rem}
+  form{background:var(--panel); backdrop-filter:saturate(120%) blur(6px); border:1px solid var(--line); border-radius:18px; padding:1.25rem}
+  fieldset{border:none; padding:0; margin:1rem 0}
+  legend{font-weight:700; margin-bottom:.25rem}
+  .help{color:#cbd5e1; font-size:.92rem; margin:.15rem 0 .6rem}
+  .row{display:grid; grid-template-columns:1fr; gap:.5rem .75rem}
+  label{display:flex; align-items:flex-start; gap:.5rem; cursor:pointer}
+  .opt{display:flex; align-items:center; gap:.5rem}
+  .opt input{transform:translateY(2px)}
+  .group{padding:1rem; border:1px solid var(--line); border-radius:14px; background:rgba(5,12,20,.35)}
+  .two-col{display:grid; grid-template-columns:1fr 1fr; gap:.75rem}
+  @media (max-width:720px){ .two-col{grid-template-columns:1fr} }
+  input[type="text"], input[type="email"], select, textarea{
+    width:100%; padding:.75rem .9rem; border-radius:12px; border:1px solid rgba(255,255,255,.18);
+    background:rgba(10,20,30,.6); color:var(--fg); outline:none;
+  }
+  textarea{min-height:110px; resize:vertical}
+  .cta{display:flex; gap:.75rem; flex-wrap:wrap; margin-top:1rem}
+  .btn{
+    border:1px solid var(--accent); background:var(--accent); color:#fff;
+    padding:.8rem 1rem; border-radius:999px; font-weight:700; letter-spacing:.01em; text-decoration:none; cursor:pointer;
+    transition:transform .2s ease, box-shadow .2s ease, background .2s ease
+  }
+  .btn:hover{transform:translateY(-1px); box-shadow:0 0 20px rgba(58,160,255,.4); background:#5bb6ff}
+  .btn.secondary{background:#1b3a52; border-color:#1b3a52}
+  .btn.secondary:hover{background:#245477; box-shadow:0 0 20px rgba(58,160,255,.25)}
+  .fine{color:#b7c3cf; font-size:.9rem}
+  .footer-note{margin-top:.75rem; font-size:.9rem; color:#c9d2dc}
+</style>
+</head>
+<body>
+  <div class="bg-image" aria-hidden="true"></div>
+  <div class="wrap">
+    <header>
+      <h1>Community Survey</h1>
+      <p class="lead">Anonymous feedback to understand how people engage with psilocybin where personal cultivation/use has been <strong>decriminalized</strong>.</p>
+      <div class="disclaimer"><strong>Important:</strong> This survey is intended <em>only</em> for respondents in jurisdictions where personal psilocybin use has been decriminalized.</div>
+    </header>
+
+    <form id="survey" onsubmit="return submitSurvey()">
+      <fieldset class="group">
+        <legend>1) How often do you use psilocybin?</legend>
+        <div class="help">Choose one.</div>
+        <div class="row">
+          <label class="opt"><input type="radio" name="frequency" value="once a day" required> once a day</label>
+          <label class="opt"><input type="radio" name="frequency" value="once a week"> once a week</label>
+          <label class="opt"><input type="radio" name="frequency" value="once a month"> once a month</label>
+          <label class="opt"><input type="radio" name="frequency" value="once a year"> once a year</label>
+          <label class="opt"><input type="radio" name="frequency" value="rarely / less than yearly"> rarely / less than yearly</label>
+          <label class="opt"><input type="radio" name="frequency" value="prefer not to say"> prefer not to say</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="group">
+        <legend>2) How and why do you use it? (check all that apply)</legend>
+        <div class="row">
+          <label class="opt"><input type="checkbox" name="reasons" value="for fun"> for fun</label>
+          <label class="opt"><input type="checkbox" name="reasons" value="for personal mental health"> for personal mental health</label>
+          <label class="opt"><input type="checkbox" name="reasons" value="for relationship health"> for relationship health</label>
+          <label class="opt"><input type="checkbox" name="reasons" value="therapeutic (e.g., anorexia or depression)"> therapeutic (e.g., anorexia or depression)</label>
+          <label class="opt"><input type="checkbox" name="reasons" value="for personal growth"> for personal growth</label>
+          <label class="opt"><input type="checkbox" name="reasons" value="for mind expansion"> for mind expansion</label>
+          <label class="opt"><input type="checkbox" name="reasons" value="other"> other</label>
+        </div>
+        <label class="help">If “other,” you can elaborate:</label>
+        <textarea name="reasons_other" placeholder="Optional"></textarea>
+      </fieldset>
+
+      <fieldset class="group">
+        <legend>3) How do you usually take psilocybin?</legend>
+        <div class="row">
+          <label class="opt"><input type="checkbox" name="context" value="alone indoors"> alone indoors</label>
+          <label class="opt"><input type="checkbox" name="context" value="with friends / socially"> with friends / socially</label>
+          <label class="opt"><input type="checkbox" name="context" value="in nature"> in nature</label>
+          <label class="opt"><input type="checkbox" name="context" value="with a guide / facilitator"> with a guide / facilitator</label>
+          <label class="opt"><input type="checkbox" name="context" value="other"> other</label>
+        </div>
+        <label class="help">If “other,” you can elaborate:</label>
+        <textarea name="context_other" placeholder="Optional"></textarea>
+      </fieldset>
+
+      <fieldset class="group">
+        <legend>4) What form and dose best describe your typical use?</legend>
+        <div class="two-col">
+          <div>
+            <div class="help"><strong>Form of use</strong> (choose all that apply)</div>
+            <label class="opt"><input type="checkbox" name="form" value="whole dried mushrooms"> whole dried mushrooms</label>
+            <label class="opt"><input type="checkbox" name="form" value="capsules / microdose"> capsules / microdose</label>
+            <label class="opt"><input type="checkbox" name="form" value="tea / extract"> tea / extract</label>
+            <label class="opt"><input type="checkbox" name="form" value="chocolate / edible infusion"> chocolate / edible infusion</label>
+            <label class="opt"><input type="checkbox" name="form" value="other"> other</label>
+            <input type="text" name="form_other" placeholder="If other, what? (optional)">
+          </div>
+          <div>
+            <div class="help"><strong>Typical dose range</strong> (choose one)</div>
+            <label class="opt"><input type="radio" name="dose" value="microdose"> microdose (sub-perceptual)</label>
+            <label class="opt"><input type="radio" name="dose" value="light"> light (mild changes)</label>
+            <label class="opt"><input type="radio" name="dose" value="moderate"> moderate (clear changes, manageable)</label>
+            <label class="opt"><input type="radio" name="dose" value="high"> high (strong effects)</label>
+            <label class="opt"><input type="radio" name="dose" value="prefer not to say"> prefer not to say</label>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="group">
+        <legend>5) Intentions & outcomes</legend>
+        <div class="help"><strong>Do you set an intention before use?</strong></div>
+        <div class="row">
+          <label class="opt"><input type="radio" name="intention" value="always"> always</label>
+          <label class="opt"><input type="radio" name="intention" value="sometimes"> sometimes</label>
+          <label class="opt"><input type="radio" name="intention" value="rarely"> rarely</label>
+          <label class="opt"><input type="radio" name="intention" value="never"> never</label>
+        </div>
+        <div class="help" style="margin-top:.75rem"><strong>What benefits have you experienced?</strong> (check all that apply)</div>
+        <div class="row">
+          <label class="opt"><input type="checkbox" name="benefits" value="reduced anxiety or depression"> reduced anxiety or depression</label>
+          <label class="opt"><input type="checkbox" name="benefits" value="improved emotional connection"> improved emotional connection</label>
+          <label class="opt"><input type="checkbox" name="benefits" value="improved creativity or problem-solving"> improved creativity or problem-solving</label>
+          <label class="opt"><input type="checkbox" name="benefits" value="relief from trauma/PTSD symptoms"> relief from trauma/PTSD symptoms</label>
+          <label class="opt"><input type="checkbox" name="benefits" value="greater life satisfaction"> greater life satisfaction</label>
+          <label class="opt"><input type="checkbox" name="benefits" value="none / not sure"> none / not sure</label>
+        </div>
+        <div class="help" style="margin-top:.75rem"><strong>Have you experienced difficult or negative effects?</strong></div>
+        <div class="row">
+          <label class="opt"><input type="radio" name="challenges" value="yes, occasionally"> yes, occasionally</label>
+          <label class="opt"><input type="radio" name="challenges" value="yes, frequently"> yes, frequently</label>
+          <label class="opt"><input type="radio" name="challenges" value="no, never"> no, never</label>
+          <label class="opt"><input type="radio" name="challenges" value="prefer not to say"> prefer not to say</label>
+        </div>
+        <label class="help">If you’d like, describe briefly (optional):</label>
+        <textarea name="challenges_notes" placeholder="Optional"></textarea>
+      </fieldset>
+
+      <fieldset class="group">
+        <legend>6) Integration</legend>
+        <div class="help">How do you integrate or reflect on your experiences?</div>
+        <div class="row">
+          <label class="opt"><input type="checkbox" name="integration" value="journaling / meditation"> journaling / meditation</label>
+          <label class="opt"><input type="checkbox" name="integration" value="therapy / coaching"> therapy / coaching</label>
+          <label class="opt"><input type="checkbox" name="integration" value="talking with friends / community"> talking with friends / community</label>
+          <label class="opt"><input type="checkbox" name="integration" value="none / spontaneous reflection"> none / spontaneous reflection</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="group">
+        <legend>7) Optional background</legend>
+        <div class="two-col">
+          <input type="text" name="location" placeholder="City, State (optional)">
+          <select name="age_range" aria-label="Age range (optional)">
+            <option value="">Age range (optional)</option>
+            <option>18–24</option><option>25–34</option><option>35–44</option>
+            <option>45–54</option><option>55–64</option><option>65+</option>
+            <option>Prefer not to say</option>
+          </select>
+        </div>
+        <div class="two-col" style="margin-top:.75rem">
+          <label class="opt"><input type="checkbox" name="join_beta" value="yes"> I’d like to join the beta community</label>
+          <input type="email" name="email" placeholder="Email (only if joining beta)" autocomplete="email">
+        </div>
+      </fieldset>
+
+      <div class="cta">
+        <button class="btn" type="submit">Submit survey</button>
+        <a class="btn secondary" href="index.html">Back to homepage</a>
+      </div>
+      <div class="footer-note">Thank you for helping us understand real-world use patterns. Responses are anonymous unless you opt into the beta.</div>
+    </form>
+  </div>
+
+<script>
+async function submitSurvey(){
+  const form = document.getElementById('survey');
+  const data = new FormData(form);
+  const toArray = (name) => data.getAll(name);
+
+  const payload = {
+    frequency: data.get('frequency') || null,
+    reasons: toArray('reasons'),
+    reasons_other: data.get('reasons_other') || null,
+    context: toArray('context'),
+    context_other: data.get('context_other') || null,
+    form: toArray('form'),
+    form_other: data.get('form_other') || null,
+    dose: data.get('dose') || null,
+    intention: data.get('intention') || null,
+    benefits: toArray('benefits'),
+    challenges: data.get('challenges') || null,
+    challenges_notes: data.get('challenges_notes') || null,
+    integration: toArray('integration'),
+    location: data.get('location') || null,
+    age_range: data.get('age_range') || null,
+    join_beta: data.get('join_beta') ? true : false,
+    email: data.get('email') || null
+  };
+
+  const res = await fetch('/api/submit-survey', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify(payload)
+  });
+  if(res.ok){ alert('Thanks for your input!'); location.href='index.html'; }
+  else{
+    const t = await res.json().catch(()=>({error:'Unknown error'}));
+    alert('Error: ' + t.error);
+  }
+  return false;
+}
+</script>
+</body>
+</html>

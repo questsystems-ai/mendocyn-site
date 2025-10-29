@@ -1,0 +1,30 @@
+# OS / editor junk
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs and caches
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependency directories (if added later)
+node_modules/
+.bun/
+dist/
+build/
+
+# Vercel / Netlify local data
+.vercel/
+.netlify/
+
+# Environment / secrets
+.env
+.env.local
+.env.production
+.env.development
+
+# Python local server cache (if you ever use http.server)
+__pycache__/
+*.pyc
