@@ -28,10 +28,26 @@
     }
 
     /* Background layer (no overlay) */
-    .bg-image{
-      position:fixed; inset:0; z-index:-1; pointer-events:none;
-      background: url('bg-desktop.jpg') center/cover no-repeat;
+    .bg-image {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+
+      /* Base desktop background */
+      background-image: url('bg-desktop.webp');
+      background-repeat: no-repeat;
+
+      /* Always anchor from top, scale down gently */
+      background-position: top center;
+      background-size: contain;
+      background-color: #000; /* fallback fill color */
+
+      /* Smooth scaling */
+      transition: background-position 0.3s ease-out, background-size 0.3s ease-out;
     }
+
+
     /* Switch to mobile image for small screens / portrait */
     @media (max-width:640px), (orientation:portrait){
       .bg-image{ background-image: url('bg-mobile.jpg'); background-position:center top }
