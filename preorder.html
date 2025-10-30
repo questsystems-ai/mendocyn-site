@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pre-order Mendosyn Enzyme Dose Kits</title>
+<meta name="description" content="Reserve a Mendosyn Enzyme Dose Kit box at a 50% discount. Fully refundable anytime before shipment.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#000;
+    --fg:#f5f5f7;
+    --accent:#3aa0ff;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--fg);
+    font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+    display:flex; align-items:center; justify-content:center;
+    background-image:url('bg-desktop.webp');
+    background-size:cover; background-position:top center;
+    background-repeat:no-repeat;
+  }
+  @media (max-width:640px){
+    body{background-image:url('bg-mobile.webp');background-position:center top;}
+  }
+  .wrap{max-width:720px;padding:4rem 1.25rem;text-align:center;background:rgba(0,0,0,.55);border-radius:20px;}
+  h1{font-size:clamp(2rem,5vw,2.8rem);margin-bottom:1rem;color:var(--accent)}
+  p{color:#ddd;margin:.5rem auto 1rem;max-width:60ch;line-height:1.6}
+  strong{color:#fff}
+  .btn{
+    display:inline-block;margin-top:1.25rem;padding:.9rem 1.6rem;
+    background:var(--accent);color:#fff;font-weight:700;
+    border-radius:999px;text-decoration:none;transition:background .2s ease;
+  }
+  .btn:hover{background:#5bb6ff}
+  .note{font-size:.9rem;color:#aaa;margin-top:1.5rem;line-height:1.4}
+  a.mail{color:var(--accent);text-decoration:none}
+  a.mail:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Pre-order Mendosyn Enzyme Dose Kits</h1>
+    <p>Reserve your first-edition <strong>box of 10 enzyme dose kits</strong> at a <strong>50% introductory discount ($250)</strong>.</p>
+    <p>Delivery expected within six months — fully refundable anytime before shipment.</p>
+    <p><strong>Available only in jurisdictions where personal psilocybin use has been decriminalized.</strong></p>
+
+    <!-- Stripe Payment Link -->
+    <a class="btn" href="https://buy.stripe.com/YOUR_PAYMENT_LINK" target="_blank" rel="noopener">Pre-order Now $250</a>
+
+    <div class="note">
+      Funds are reserved by Mendosyn Bio for fulfillment of your order and may be refunded at any time prior to shipment.  
+      If fulfillment is delayed beyond six months, payment will be refunded automatically.
+    </div>
+
+    <div class="note">
+      Questions? <a class="mail" href="mailto:orders@mendosyn.bio">orders@mendosyn.bio</a>
+    </div>
+
+    <div class="note">
+      <a class="mail" href="index.html">← Back to home</a>
+    </div>
+  </div>
+</body>
+</html>
