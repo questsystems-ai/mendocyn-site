@@ -1,151 +1,152 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Legal psilocybin on demand</title>
-  <meta name="description" content="Growing mushrooms for personal use from legally obtained spores is a pain in the ass. Our process delivers the goods in minutes.">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Legal psilocybin on demand</title>
+<meta name="description" content="Growing mushrooms for personal use from legally obtained spores is a pain in the ass. Our process delivers the goods in minutes.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
 
-  <!-- Preload the right image for faster first paint -->
-  <link rel="preload" as="image" href="bg-desktop.jpg" media="(min-width: 641px)">
-  <link rel="preload" as="image" href="bg-mobile.jpg"  media="(max-width: 640px), (orientation: portrait)">
+<link rel="preload" as="image" href="bg-desktop.webp" media="(min-width: 641px)">
+<link rel="preload" as="image" href="bg-mobile.webp"  media="(max-width: 640px), (orientation: portrait)">
 
-  <!-- Favicons -->
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="favicon.png">
-  <link rel="apple-touch-icon" href="favicon.png">
-  <link rel="shortcut icon" href="favicon.png">
+<style>
+  :root{
+    --bg:#000; --fg:#f5f5f7; --accent:#3aa0ff;
+    --panel: rgba(0,0,0,.70); --line: rgba(255,255,255,.18);
+  }
+  *{ box-sizing:border-box }
+  html, body { height: 100% }
+  body{
+    margin:0; background:var(--bg); color:var(--fg);
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .bg-image{
+    position:fixed; inset:0; z-index:-1; pointer-events:none;
+    background: url('bg-desktop.webp') top center/cover no-repeat;
+  }
+  @media (max-width:640px), (orientation:portrait){
+    .bg-image{ background-image: url('bg-mobile.webp'); background-position:center top }
+  }
 
+  .wrap{ width:100%; max-width:1080px; padding:6rem 1.25rem; text-align:center; position:relative; }
+  h1{ color:#fff; font-size:clamp(2rem,5vw,3.5rem); line-height:1.08; margin:.25rem 0 0; text-shadow:0 2px 18px rgba(0,0,0,.35); }
+  .sub{ color:#fff; font-size:clamp(1rem,2vw,1.25rem); max-width:56ch; margin:.75rem auto 0; text-shadow:0 1px 12px rgba(0,0,0,.35); }
+  .cta{ display:flex; gap:.75rem; flex-wrap:wrap; justify-content:center; margin:1.25rem 0 0; }
+  .btn{
+    border:1px solid var(--accent); background:var(--accent); color:#fff; padding:.8rem 1rem;
+    border-radius:999px; font-weight:600; letter-spacing:.01em; cursor:pointer; text-decoration:none;
+    transition:transform .2s ease, box-shadow .2s ease, background .2s ease;
+  }
+  .btn:hover{ transform:translateY(-1px); box-shadow:0 0 20px rgba(58,160,255,.4); background:#5bb6ff; }
+  .btn.secondary{ background:#1b3a52; border-color:#1b3a52; }
+  .btn.secondary:hover{ background:#245477; box-shadow:0 0 20px rgba(58,160,255,.25); }
+  @media (prefers-reduced-motion: reduce){ .btn{ transition:none } }
 
-  <style>
-    :root{
-      --bg:#000;          /* fallback if image fails */
-      --fg:#f5f5f7;       /* white text */
-      --accent:#3aa0ff;   /* psilocybin blue */
-    }
-    *{ box-sizing:border-box }
-    html, body { height: 100% }
-    body{
-      margin:0;
-      background:var(--bg);
-      color:var(--fg);
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-      display:flex; align-items:center; justify-content:center;
-    }
-
-    /* Background layer (no overlay) */
-    .bg-image {
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      pointer-events: none;
-
-      /* Base desktop background */
-      background-image: url('bg-desktop.jpg');
-      background-repeat: no-repeat;
-
-      /* Always anchor from top, scale down gently */
-      background-position: top center;
-      background-size: contain;
-      background-color: #000; /* fallback fill color */
-
-      /* Smooth scaling */
-      transition: background-position 0.3s ease-out, background-size 0.3s ease-out;
-    }
-
-
-    /* Switch to mobile image for small screens / portrait */
-    @media (max-width:640px), (orientation:portrait){
-      .bg-image{ background-image: url('bg-mobile.jpg'); background-position:center top }
-    }
-
-    /* Optional: high-DPI variants using image-set() if you later add @2x files */
-    @media (min-resolution:2dppx){
-      .bg-image{
-        background-image: image-set(
-          url('bg-desktop.jpg') 1x,
-          url('bg-desktop.jpg') 2x
-        );
-      }
-    }
-    @media (max-width:640px) and (min-resolution:2dppx), (orientation:portrait) and (min-resolution:2dppx){
-      .bg-image{
-        background-image: image-set(
-          url('bg-mobile.jpg') 1x,
-          url('bg-mobile.jpg') 2x
-        );
-      }
-    }
-
-    /* Content */
-    .wrap{
-      width:100%;
-      max-width:1080px;
-      padding:6rem 1.25rem;
-      text-align:center;
-      position:relative;
-    }
-    h1{
-      color:#fff;
-      font-size:clamp(2rem,5vw,3.5rem);
-      line-height:1.08;
-      margin:.25rem 0 0;
-      text-shadow:0 2px 18px rgba(0,0,0,.35);
-    }
-    .sub{
-      color:#fff;
-      font-size:clamp(1rem,2vw,1.25rem);
-      max-width:56ch;
-      margin:.75rem auto 0;
-      text-shadow:0 1px 12px rgba(0,0,0,.35);
-    }
-    .cta{
-      display:flex; gap:.75rem; flex-wrap:wrap; justify-content:center; margin:1.25rem 0 0;
-    }
-    .btn{
-      border:1px solid var(--accent);
-      background:var(--accent);
-      color:#fff;
-      padding:.8rem 1rem;
-      border-radius:999px;
-      font-weight:600; letter-spacing:.01em;
-      cursor:pointer; text-decoration:none;
-      transition:transform .2s ease, box-shadow .2s ease, background .2s ease;
-    }
-    .btn:hover{
-      transform:translateY(-1px);
-      box-shadow:0 0 20px rgba(58,160,255,.4);
-      background:#5bb6ff;
-    }
-    .btn.secondary{
-      background:#1b3a52; border-color:#1b3a52;
-    }
-    .btn.secondary:hover{
-      background:#245477; box-shadow:0 0 20px rgba(58,160,255,.25);
-    }
-
-    @media (prefers-reduced-motion: reduce){
-      .btn{ transition:none }
-    }
-  </style>
+  /* Modal */
+  .modal-backdrop{
+    position:fixed; inset:0; display:none; align-items:center; justify-content:center; z-index:10;
+    background: rgba(0,0,0,.55);
+  }
+  .modal{
+    width:min(720px, 92vw); background:var(--panel); border:1px solid var(--line); border-radius:18px;
+    padding:1.25rem; backdrop-filter:saturate(120%) blur(6px);
+  }
+  .modal h2{ margin:.25rem 0 0.5rem; font-size:1.25rem; }
+  .checks{ display:grid; gap:.5rem; text-align:left; margin:.75rem 0 1rem; }
+  .checks label{ display:flex; gap:.6rem; align-items:flex-start; line-height:1.4; cursor:pointer; }
+  .modal-cta{ display:flex; gap:.6rem; flex-wrap:wrap; justify-content:flex-end }
+  .modal button{
+    border:1px solid var(--accent); background:var(--accent); color:#fff; padding:.65rem 1rem; border-radius:12px; font-weight:700; cursor:pointer;
+  }
+  .modal button[disabled]{ opacity:.45; cursor:not-allowed; }
+  .modal .cancel{ background:#303b46; border-color:#303b46; }
+  .modal .cancel:hover{ background:#3a4a58; }
+</style>
 </head>
 <body>
   <div class="bg-image" aria-hidden="true"></div>
 
   <main class="wrap" role="main">
     <header>
-      <h1>Transformation. On demand.</h1>
+      <h1>Legal psilocybin on demand</h1>
       <p class="sub">
         Growing mushrooms for personal use from legally obtained spores is difficult and time-consuming.
         Our natural biosynthetic process kit delivers calibrated dose medical grade tryptamines in minutes.
-      </p>
+</p>
       <div class="cta" aria-label="Calls to action">
         <a class="btn" href="survey.html">Take the survey</a>
         <a class="btn secondary" href="beta.html">Join the beta community</a>
-        <a class="btn" href="preorder.html">Pre-order Now</a>
+        <!-- Pre-order trigger (intercepted by JS to show the gate) -->
+        <a class="btn" id="preorderBtn" href="preorder.html">Pre-order Now</a>
       </div>
     </header>
   </main>
+
+  <!-- Gate Modal -->
+  <div class="modal-backdrop" id="gateBackdrop" role="dialog" aria-modal="true" aria-labelledby="gateTitle" aria-hidden="true">
+    <div class="modal">
+      <h2 id="gateTitle">Please confirm before continuing</h2>
+      <div class="checks">
+        <label><input type="checkbox" id="ageCheck"> I am <strong>18 years or older</strong>.</label>
+        <label><input type="checkbox" id="jurisCheck"> I understand this product <strong>cannot be shipped to all jurisdictions</strong>.</label>
+      </div>
+      <div class="modal-cta">
+        <button class="cancel" id="gateCancel" type="button">Cancel</button>
+        <button id="gateOk" type="button" disabled>OK</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+  // Helpers
+  const keyAge = 'mendosyn_age_ok';
+  const keyJur = 'mendosyn_juris_ok';
+
+  const btn = document.getElementById('preorderBtn');
+  const backdrop = document.getElementById('gateBackdrop');
+  const ok = document.getElementById('gateOk');
+  const cancel = document.getElementById('gateCancel');
+  const age = document.getElementById('ageCheck');
+  const juris = document.getElementById('jurisCheck');
+
+  // Enable OK only when both boxes checked
+  function syncOk(){ ok.disabled = !(age.checked && juris.checked); }
+  age.addEventListener('change', syncOk);
+  juris.addEventListener('change', syncOk);
+
+  function openGate(){
+    backdrop.style.display = 'flex';
+    backdrop.setAttribute('aria-hidden','false');
+    // reset checks each open
+    age.checked = false; juris.checked = false; syncOk();
+  }
+  function closeGate(){
+    backdrop.style.display = 'none';
+    backdrop.setAttribute('aria-hidden','true');
+  }
+
+  // Intercept pre-order click
+  btn.addEventListener('click', function(e){
+    // If already accepted previously, go through
+    if (localStorage.getItem(keyAge) === '1' && localStorage.getItem(keyJur) === '1') return;
+    e.preventDefault();
+    openGate();
+  });
+
+  // Buttons
+  cancel.addEventListener('click', closeGate);
+  ok.addEventListener('click', function(){
+    localStorage.setItem(keyAge,'1');
+    localStorage.setItem(keyJur,'1');
+    closeGate();
+    // proceed
+    window.location.href = 'preorder.html';
+  });
+
+  // ESC to close
+  window.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && backdrop.style.display==='flex') closeGate(); });
+</script>
 </body>
 </html>

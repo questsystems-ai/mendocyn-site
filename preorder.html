@@ -7,43 +7,62 @@
 <meta name="description" content="Reserve a Mendosyn Enzyme Dose Kit box at a 50% discount. Fully refundable anytime before shipment.">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg:#000;
-    --fg:#f5f5f7;
-    --accent:#3aa0ff;
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%}
+  :root{ --bg:#000; --fg:#f5f5f7; --accent:#3aa0ff; --panel:rgba(0,0,0,.65); --line:rgba(255,255,255,.18) }
+  *{box-sizing:border-box} html,body{height:100%}
   body{
-    margin:0;
-    background:var(--bg);
-    color:var(--fg);
+    margin:0; background:var(--bg); color:var(--fg);
     font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
     display:flex; align-items:center; justify-content:center;
-    background-image:url('bg-desktop.webp');
-    background-size:cover; background-position:top center;
-    background-repeat:no-repeat;
+    background-image:url('bg-desktop.webp'); background-size:cover; background-position:top center; background-repeat:no-repeat;
   }
-  @media (max-width:640px){
-    body{background-image:url('bg-mobile.webp');background-position:center top;}
-  }
-  .wrap{max-width:720px;padding:4rem 1.25rem;text-align:center;background:rgba(0,0,0,.55);border-radius:20px;}
+  @media (max-width:640px){ body{background-image:url('bg-mobile.webp'); background-position:center top} }
+  .wrap{max-width:720px;padding:4rem 1.25rem;text-align:center;background:rgba(0,0,0,.55);border-radius:20px}
   h1{font-size:clamp(2rem,5vw,2.8rem);margin-bottom:1rem;color:var(--accent)}
   p{color:#ddd;margin:.5rem auto 1rem;max-width:60ch;line-height:1.6}
   strong{color:#fff}
-  .btn{
-    display:inline-block;margin-top:1.25rem;padding:.9rem 1.6rem;
-    background:var(--accent);color:#fff;font-weight:700;
-    border-radius:999px;text-decoration:none;transition:background .2s ease;
-  }
+  .btn{display:inline-block;margin-top:1.25rem;padding:.9rem 1.6rem;background:var(--accent);color:#fff;font-weight:700;border-radius:999px;text-decoration:none;transition:background .2s ease}
   .btn:hover{background:#5bb6ff}
   .note{font-size:.9rem;color:#aaa;margin-top:1.5rem;line-height:1.4}
-  a.mail{color:var(--accent);text-decoration:none}
-  a.mail:hover{text-decoration:underline}
+  a.mail{color:var(--accent);text-decoration:none} a.mail:hover{text-decoration:underline}
+
+  /* Modal (same styling as index) */
+  .modal-backdrop{
+    position:fixed; inset:0; display:none; align-items:center; justify-content:center; z-index:10;
+    background: rgba(0,0,0,.55);
+  }
+  .modal{
+    width:min(720px, 92vw); background:var(--panel); border:1px solid var(--line); border-radius:18px;
+    padding:1.25rem; backdrop-filter:saturate(120%) blur(6px);
+  }
+  .modal h2{ margin:.25rem 0 0.5rem; font-size:1.25rem; }
+  .checks{ display:grid; gap:.5rem; text-align:left; margin:.75rem 0 1rem; }
+  .checks label{ display:flex; gap:.6rem; align-items:flex-start; line-height:1.4; cursor:pointer; }
+  .modal-cta{ display:flex; gap:.6rem; flex-wrap:wrap; justify-content:flex-end }
+  .modal button{
+    border:1px solid var(--accent); background:var(--accent); color:#fff; padding:.65rem 1rem; border-radius:12px; font-weight:700; cursor:pointer;
+  }
+  .modal button[disabled]{ opacity:.45; cursor:not-allowed; }
+  .modal .cancel{ background:#303b46; border-color:#303b46; }
+  .modal .cancel:hover{ background:#3a4a58; }
 </style>
 </head>
 <body>
-  <div class="wrap">
+  <!-- Gate Modal -->
+  <div class="modal-backdrop" id="gateBackdrop" role="dialog" aria-modal="true" aria-labelledby="gateTitle" aria-hidden="true">
+    <div class="modal">
+      <h2 id="gateTitle">Please confirm before continuing</h2>
+      <div class="checks">
+        <label><input type="checkbox" id="ageCheck"> I am <strong>18 years or older</strong>.</label>
+        <label><input type="checkbox" id="jurisCheck"> I understand this product <strong>cannot be shipped to all jurisdictions</strong>.</label>
+      </div>
+      <div class="modal-cta">
+        <button class="cancel" id="gateCancel" type="button">Cancel</button>
+        <button id="gateOk" type="button" disabled>OK</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap" id="content" style="visibility:hidden">
     <h1>Pre-order Mendosyn Enzyme Dose Kits</h1>
     <p>Reserve your first-edition <strong>box of 10 enzyme dose kits</strong> at a <strong>50% introductory discount ($250)</strong>.</p>
     <p>Delivery expected within six months — fully refundable anytime before shipment.</p>
@@ -53,17 +72,56 @@
     <a class="btn" href="https://buy.stripe.com/YOUR_PAYMENT_LINK" target="_blank" rel="noopener">Pre-order Now $250</a>
 
     <div class="note">
-      Funds are reserved by Mendosyn Bio for fulfillment of your order and may be refunded at any time prior to shipment.  
+      Funds are reserved by Mendosyn Bio for fulfillment of your order and may be refunded at any time prior to shipment.
       If fulfillment is delayed beyond six months, payment will be refunded automatically.
     </div>
 
     <div class="note">
-      Questions? <a class="mail" href="mailto:orders@mendosyn.bio">orders@mendosynbio.com</a>
-    </div>
-
-    <div class="note">
-      <a class="mail" href="index.html">← Back to home</a>
+      Questions? <a class="mail" href="mailto:orders@mendosyn.bio">orders@mendosyn.bio</a> • <a class="mail" href="index.html">← Back to home</a>
     </div>
   </div>
+
+<script>
+  const keyAge = 'mendosyn_age_ok';
+  const keyJur = 'mendosyn_juris_ok';
+
+  const backdrop = document.getElementById('gateBackdrop');
+  const ok = document.getElementById('gateOk');
+  const cancel = document.getElementById('gateCancel');
+  const age = document.getElementById('ageCheck');
+  const juris = document.getElementById('jurisCheck');
+  const content = document.getElementById('content');
+
+  function syncOk(){ ok.disabled = !(age.checked && juris.checked); }
+  age.addEventListener('change', syncOk);
+  juris.addEventListener('change', syncOk);
+
+  function openGate(){
+    backdrop.style.display = 'flex';
+    backdrop.setAttribute('aria-hidden','false');
+    age.checked=false; juris.checked=false; syncOk();
+  }
+  function closeGate(){
+    backdrop.style.display = 'none';
+    backdrop.setAttribute('aria-hidden','true');
+  }
+
+  // Gate enforcement: show content only if previously accepted
+  const accepted = (localStorage.getItem(keyAge)==='1' && localStorage.getItem(keyJur)==='1');
+  if (accepted){
+    content.style.visibility = 'visible';
+  } else {
+    openGate();
+  }
+
+  cancel.addEventListener('click', ()=>{ window.location.href = 'index.html'; });
+  ok.addEventListener('click', ()=>{
+    localStorage.setItem(keyAge,'1');
+    localStorage.setItem(keyJur,'1');
+    closeGate();
+    content.style.visibility = 'visible';
+  });
+  window.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && backdrop.style.display==='flex'){ window.location.href='index.html'; } });
+</script>
 </body>
 </html>
