@@ -20,7 +20,7 @@
   body{
     margin:0; background:var(--bg); color:var(--fg);
     font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-    display:flex; align-items:center; justify-content:center;
+    display:flex; align-items:center; justify-content:center; flex-direction:column;
   }
   .bg-image{
     position:fixed; inset:0; z-index:-1; pointer-events:none;
@@ -30,10 +30,20 @@
     .bg-image{ background-image: url('bg-mobile.jpg'); background-position:center top }
   }
 
-  .wrap{ width:100%; max-width:1080px; padding:6rem 1.25rem; text-align:center; position:relative; }
-  h1{ color:#fff; font-size:clamp(2rem,5vw,3.5rem); line-height:1.08; margin:.25rem 0 0; text-shadow:0 2px 18px rgba(0,0,0,.35); }
-  .sub{ color:#fff; font-size:clamp(1rem,2vw,1.25rem); max-width:56ch; margin:.75rem auto 0; text-shadow:0 1px 12px rgba(0,0,0,.35); }
-  .cta{ display:flex; gap:.75rem; flex-wrap:wrap; justify-content:center; margin:1.25rem 0 0; }
+  .wrap{
+    width:100%; max-width:1080px; padding:6rem 1.25rem; text-align:center; position:relative;
+  }
+  h1{
+    color:#fff; font-size:clamp(2rem,5vw,3.5rem); line-height:1.08;
+    margin:.25rem 0 0; text-shadow:0 2px 18px rgba(0,0,0,.35);
+  }
+  .sub{
+    color:#fff; font-size:clamp(1rem,2vw,1.25rem); max-width:56ch; margin:.75rem auto 0;
+    text-shadow:0 1px 12px rgba(0,0,0,.35);
+  }
+  .cta{
+    display:flex; gap:.75rem; flex-wrap:wrap; justify-content:center; margin:1.25rem 0 0;
+  }
   .btn{
     border:1px solid var(--accent); background:var(--accent); color:#fff; padding:.8rem 1rem;
     border-radius:999px; font-weight:600; letter-spacing:.01em; cursor:pointer; text-decoration:none;
@@ -43,6 +53,12 @@
   .btn.secondary{ background:#1b3a52; border-color:#1b3a52; }
   .btn.secondary:hover{ background:#245477; box-shadow:0 0 20px rgba(58,160,255,.25); }
   @media (prefers-reduced-motion: reduce){ .btn{ transition:none } }
+
+  /* A) Mobile-only spacing tweak so hero clears logo area */
+  @media (max-width: 640px), (orientation: portrait){
+    .wrap{ padding-top: 8.5rem; }     /* was 6rem; bump ~40px */
+    h1{ margin-top: .75rem; }
+  }
 
   /* Modal */
   .modal-backdrop{
@@ -63,6 +79,32 @@
   .modal button[disabled]{ opacity:.45; cursor:not-allowed; }
   .modal .cancel{ background:#303b46; border-color:#303b46; }
   .modal .cancel:hover{ background:#3a4a58; }
+
+  /* C) About the inventor section */
+  .about{
+    width:100%;
+    padding: 4rem 1.25rem 5rem;
+    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,.65) 60%, rgba(0,0,0,.85) 100%);
+  }
+  .about-inner{
+    max-width: 1080px; margin: 0 auto; display: grid; gap: 1.2rem;
+    grid-template-columns: 280px 1fr; align-items: center;
+  }
+  .about-photo{
+    width: 100%; border-radius: 16px; border: 1px solid rgba(255,255,255,.12);
+    box-shadow: 0 12px 40px rgba(0,0,0,.35);
+    object-fit: cover; aspect-ratio: 3/4;
+  }
+  .about-copy h2{
+    margin: 0 0 .5rem; color: var(--accent);
+    font-size: clamp(1.4rem, 3vw, 2rem);
+  }
+  .about-copy p{ color: #e6e9ee; line-height: 1.7; margin: .25rem 0 .75rem; }
+
+  @media (max-width: 820px){
+    .about-inner{ grid-template-columns: 1fr; }
+    .about-photo{ max-width: 360px; margin: 0 auto; }
+  }
 </style>
 </head>
 <body>
@@ -78,11 +120,25 @@
       <div class="cta" aria-label="Calls to action">
         <a class="btn" href="survey.html">Take the survey</a>
         <a class="btn secondary" href="beta.html">Join the beta community</a>
-        <!-- Pre-order trigger now a BUTTON (can’t be ctrl/cmd-clicked to bypass modal) -->
+        <!-- Pre-order trigger now a BUTTON (prevents ctrl/cmd-click bypass) -->
         <button class="btn" id="preorderBtn" type="button">Pre-order Now</button>
+        <!-- C) Jump link to About section -->
+        <a class="btn secondary" href="#about">About the inventor</a>
       </div>
     </header>
   </main>
+
+  <!-- C) About the inventor -->
+  <section id="about" class="about" aria-label="About the inventor">
+    <div class="about-inner">
+      <img src="bryan.jpg" alt="Bryan — Inventor" class="about-photo">
+      <div class="about-copy">
+        <h2>About the Inventor</h2>
+        <p>Bryan is a synthetic-biology engineer focused on modular enzymatic cascades for safe, precise biosynthesis. His work blends academic rigor with product discipline to bring calibrated, medical-grade outcomes to personal-use jurisdictions.</p>
+        <p>Previously, he led projects across enzyme engineering, chromatography, and bioprocess scale-up, and now steers Mendosyn’s R&amp;D roadmap.</p>
+      </div>
+    </div>
+  </section>
 
   <!-- Gate Modal -->
   <div class="modal-backdrop" id="gateBackdrop" role="dialog" aria-modal="true" aria-labelledby="gateTitle" aria-hidden="true">
@@ -100,6 +156,17 @@
   </div>
 
 <script>
+  // Smooth scroll for #about link
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click', e=>{
+      const id = a.getAttribute('href');
+      if(id.length > 1){
+        const el = document.querySelector(id);
+        if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth', block:'start'}); }
+      }
+    });
+  });
+
   // Use sessionStorage so consent is per-session (not forever)
   const store = window.sessionStorage;
   const keyAge = 'mendosyn_age_ok';
