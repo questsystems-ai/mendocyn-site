@@ -72,14 +72,14 @@
     <header>
       <h1>Transformation. On demand.</h1>
       <p class="sub">
-        Growing mushrooms for personal use from legally obtained spores is difficult and time-consuming.
-        Our natural biosynthetic process kit delivers calibrated dose medical grade tryptamines in minutes.
-</p>
+        Growing psychadelic mushrooms for personal use from legally obtained spores is difficult and time-consuming.
+        Our natural biosynthetic process kit delivers calibrated dose, medical grade, psilocybin in minutes.
+      </p>
       <div class="cta" aria-label="Calls to action">
         <a class="btn" href="survey.html">Take the survey</a>
         <a class="btn secondary" href="beta.html">Join the beta community</a>
-        <!-- Pre-order trigger (intercepted by JS to show the gate) -->
-        <a class="btn" id="preorderBtn" href="preorder.html">Pre-order Now</a>
+        <!-- Pre-order trigger now a BUTTON (can’t be ctrl/cmd-clicked to bypass modal) -->
+        <button class="btn" id="preorderBtn" type="button">Pre-order Now</button>
       </div>
     </header>
   </main>
@@ -100,7 +100,8 @@
   </div>
 
 <script>
-  // Helpers
+  // Use sessionStorage so consent is per-session (not forever)
+  const store = window.sessionStorage;
   const keyAge = 'mendosyn_age_ok';
   const keyJur = 'mendosyn_juris_ok';
 
@@ -111,7 +112,6 @@
   const age = document.getElementById('ageCheck');
   const juris = document.getElementById('jurisCheck');
 
-  // Enable OK only when both boxes checked
   function syncOk(){ ok.disabled = !(age.checked && juris.checked); }
   age.addEventListener('change', syncOk);
   juris.addEventListener('change', syncOk);
@@ -119,7 +119,6 @@
   function openGate(){
     backdrop.style.display = 'flex';
     backdrop.setAttribute('aria-hidden','false');
-    // reset checks each open
     age.checked = false; juris.checked = false; syncOk();
   }
   function closeGate(){
@@ -128,20 +127,20 @@
   }
 
   // Intercept pre-order click
-  btn.addEventListener('click', function(e){
-    // If already accepted previously, go through
-    if (localStorage.getItem(keyAge) === '1' && localStorage.getItem(keyJur) === '1') return;
-    e.preventDefault();
+  btn.addEventListener('click', function(){
+    if (store.getItem(keyAge) === '1' && store.getItem(keyJur) === '1') {
+      window.location.href = 'preorder.html';
+      return;
+    }
     openGate();
   });
 
   // Buttons
   cancel.addEventListener('click', closeGate);
   ok.addEventListener('click', function(){
-    localStorage.setItem(keyAge,'1');
-    localStorage.setItem(keyJur,'1');
+    store.setItem(keyAge,'1');
+    store.setItem(keyJur,'1');
     closeGate();
-    // proceed
     window.location.href = 'preorder.html';
   });
 

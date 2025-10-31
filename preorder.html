@@ -26,7 +26,7 @@
   .note{font-size:.9rem;color:#aaa;margin-top:1.5rem;line-height:1.4}
   a.mail{color:var(--accent);text-decoration:none} a.mail:hover{text-decoration:underline}
 
-  /* Modal (same styling as index) */
+  /* Modal */
   .modal-backdrop{
     position:fixed; inset:0; display:none; align-items:center; justify-content:center; z-index:10;
     background: rgba(0,0,0,.55);
@@ -83,6 +83,7 @@
   </div>
 
 <script>
+  const store = window.sessionStorage;
   const keyAge = 'mendosyn_age_ok';
   const keyJur = 'mendosyn_juris_ok';
 
@@ -107,8 +108,8 @@
     backdrop.setAttribute('aria-hidden','true');
   }
 
-  // Gate enforcement: show content only if previously accepted
-  const accepted = (localStorage.getItem(keyAge)==='1' && localStorage.getItem(keyJur)==='1');
+  // Show content only if previously accepted in this session
+  const accepted = (store.getItem(keyAge)==='1' && store.getItem(keyJur)==='1');
   if (accepted){
     content.style.visibility = 'visible';
   } else {
@@ -117,8 +118,8 @@
 
   cancel.addEventListener('click', ()=>{ window.location.href = 'index.html'; });
   ok.addEventListener('click', ()=>{
-    localStorage.setItem(keyAge,'1');
-    localStorage.setItem(keyJur,'1');
+    store.setItem(keyAge,'1');
+    store.setItem(keyJur,'1');
     closeGate();
     content.style.visibility = 'visible';
   });
