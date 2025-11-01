@@ -16,121 +16,127 @@
     --sa-top: env(safe-area-inset-top, 0px);
     --sa-bot: env(safe-area-inset-bottom, 0px);
 
-    /* Push background image down */
-    --bg-top-offset: 16px;
-    /* Push hero text further down than bg for clearance */
-    --hero-shift: calc(var(--bg-top-offset) * 1.55);
-    --text-extra-shift: 0px;
+    /* TUNE ME: background image vertical offset */
+    --bg-top-offset: 40px;
+
+    /* TUNE ME: hero text vertical offset (independent of bg) */
+    --card-top-offset: 96px;
   }
   *{ box-sizing:border-box }
-  html, body { height:100%; margin:0; }
+  html, body { height: 100% }
   body{
-    background:var(--bg); color:var(--fg);
-    font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-    -webkit-font-smoothing:antialiased;
+    margin:0; background:var(--bg); color:var(--fg);
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
   }
 
-  /* Background layer */
+  /* Fixed background layer; top is offset so it isn't hidden under browser chrome */
   .bg{
     position:fixed; inset:0; z-index:-1; pointer-events:none;
-    background: url('bg-desktop.jpg') center var(--bg-top-offset) / cover no-repeat;
+    background:url('bg-desktop.jpg') center var(--bg-top-offset) / cover no-repeat;
   }
   @media (max-width:640px), (orientation:portrait){
     .bg{ background-image:url('bg-mobile.jpg'); }
   }
   .bg::after{
+    /* Subtle darkening for text readability; no visible "card" */
     content:""; position:absolute; inset:0;
-    background:radial-gradient(120% 90% at 50% 10%, rgba(0,0,0,.08), rgba(0,0,0,.55) 60%, rgba(0,0,0,.8));
+    background:radial-gradient(120% 90% at 50% 10%, rgba(0,0,0,.10), rgba(0,0,0,.55) 60%, rgba(0,0,0,.78));
   }
 
-  /* HERO */
+  /* HERO — uses a "card" block for dependable layout, but the card is transparent */
   .hero{
     min-height:100svh;
-    display:grid;
-    justify-items:center;
-    align-content:start;
-    padding:clamp(48px,8vh,96px) 16px;
-    padding-top: calc(var(--sa-top) + var(--hero-shift));
-    padding-bottom: calc(var(--sa-bot) + clamp(28px,6vh,64px));
+    display:grid; place-items:start center;
+    padding-left:16px; padding-right:16px;
+    padding-top: calc(var(--sa-top) + 16px);
+    padding-bottom: calc(var(--sa-bot) + clamp(28px, 6vh, 64px));
   }
-  .stack{
-    width:min(1080px,100%);
-    padding:clamp(20px,3.5vw,28px);
-    text-align:center;
-  }
+  .panel{
+    width:min(1080px, 100%);
+    margin-top: var(--card-top-offset); /* independent control for text position */
+    /* transparent "card": keep spacing, lose visuals */
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    backdrop-filter: none;
 
+    /* keep nice internal spacing + center text */
+    padding: clamp(20px, 3.5vw, 28px);
+    text-align: center;
+  }
   h1{
-    color:#fff; font-size:clamp(2rem,5vw,3.5rem); line-height:1.075;
+    color:#fff; font-size:clamp(2rem, 5vw, 3.5rem); line-height:1.075;
     margin:0 0 .5rem;
-    text-shadow:0 3px 22px rgba(0,0,0,.45),0 0 1px rgba(0,0,0,.6);
+    text-shadow:0 3px 22px rgba(0,0,0,.45), 0 0 1px rgba(0,0,0,.6);
   }
   .sub{
-    color:#eaf0f6; font-size:clamp(1rem,2.1vw,1.2rem);
+    color:#eaf0f6; font-size:clamp(1rem, 2.1vw, 1.2rem);
     margin:.5rem auto 0; max-width:58ch; line-height:1.7;
     text-shadow:0 2px 16px rgba(0,0,0,.45);
   }
   .cta{
-    display:flex; flex-wrap:wrap; justify-content:center;
-    gap:.75rem; margin:1.25rem 0 0;
+    display:flex; gap:.75rem; flex-wrap:wrap; justify-content:center; margin:1.25rem 0 0;
   }
   .btn{
-    border:1px solid var(--accent); background:var(--accent); color:#fff;
-    padding:.85rem 1.05rem; border-radius:999px; font-weight:700;
-    letter-spacing:.01em; cursor:pointer; text-decoration:none;
+    border:1px solid var(--accent); background:var(--accent); color:#fff; padding:.85rem 1.05rem;
+    border-radius:999px; font-weight:700; letter-spacing:.01em; cursor:pointer; text-decoration:none;
     transition:transform .2s ease, box-shadow .2s ease, background .2s ease;
   }
   .btn:hover{ transform:translateY(-1px); box-shadow:0 0 20px rgba(58,160,255,.4); background:#5bb6ff; }
   .btn.secondary{ background:#1b3a52; border-color:#1b3a52; }
   .btn.secondary:hover{ background:#245477; box-shadow:0 0 20px rgba(58,160,255,.25); }
-  @media (prefers-reduced-motion:reduce){ .btn{ transition:none } }
+  @media (prefers-reduced-motion: reduce){ .btn{ transition:none } }
 
-  /* About section */
+  /* About */
   .about{
-    padding:clamp(48px,9vh,96px) 16px;
-    background:linear-gradient(to bottom,rgba(0,0,0,0)0%,rgba(0,0,0,.65)60%,rgba(0,0,0,.85)100%);
+    padding: clamp(48px, 9vh, 96px) 16px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,.65) 60%, rgba(0,0,0,.85) 100%);
   }
   .about-inner{
-    max-width:1080px;margin:0 auto;display:grid;gap:1.1rem;
-    grid-template-columns:280px 1fr;align-items:center;
+    max-width:1080px; margin:0 auto; display:grid; gap:1.1rem;
+    grid-template-columns: 280px 1fr; align-items:center;
   }
   .about-photo{
-    width:100%;border-radius:16px;border:1px solid rgba(255,255,255,.12);
-    box-shadow:0 12px 40px rgba(0,0,0,.35);object-fit:cover;aspect-ratio:3/4;
+    width:100%; border-radius:16px; border:1px solid rgba(255,255,255,.12);
+    box-shadow:0 12px 40px rgba(0,0,0,.35); object-fit:cover; aspect-ratio:3/4;
   }
-  .about-copy h2{margin:0 0 .35rem;color:var(--accent);font-size:clamp(1.4rem,3vw,2rem);}
-  .about-copy p{color:#e6e9ee;line-height:1.7;margin:.25rem 0 .65rem;}
+  .about-copy h2{
+    margin:0 0 .35rem; color:var(--accent);
+    font-size:clamp(1.4rem, 3vw, 2rem);
+  }
+  .about-copy p{ color:#e6e9ee; line-height:1.7; margin:.25rem 0 .65rem; }
   @media (max-width:820px){
-    .about-inner{grid-template-columns:1fr;}
-    .about-photo{max-width:360px;margin:0 auto;}
+    .about-inner{ grid-template-columns:1fr; }
+    .about-photo{ max-width:360px; margin:0 auto; }
   }
 
-  /* Modal gate */
+  /* Modal Gate (age/jurisdiction) */
   .modal-backdrop{
     position:fixed; inset:0; display:none; align-items:center; justify-content:center; z-index:10;
-    background:rgba(0,0,0,.58); padding:16px;
+    background: rgba(0,0,0,.58); padding:16px;
   }
   .modal{
-    width:min(720px,100%); background:rgba(12,18,28,.9); border:1px solid var(--line); border-radius:18px;
+    width:min(720px, 100%); background:rgba(12,18,28,.9); border:1px solid var(--line); border-radius:18px;
     padding:16px; backdrop-filter:saturate(120%) blur(6px);
   }
-  .modal h2{margin:.25rem 0 .6rem;font-size:1.25rem;}
-  .checks{display:grid;gap:.55rem;text-align:left;margin:.75rem 0 1rem;}
-  .checks label{display:flex;gap:.6rem;align-items:flex-start;line-height:1.5;cursor:pointer;}
-  .modal-cta{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:flex-end;}
+  .modal h2{ margin:.25rem 0 .6rem; font-size:1.25rem; }
+  .checks{ display:grid; gap:.55rem; text-align:left; margin:.75rem 0 1rem; }
+  .checks label{ display:flex; gap:.6rem; align-items:flex-start; line-height:1.5; cursor:pointer; }
+  .modal-cta{ display:flex; gap:.6rem; flex-wrap:wrap; justify-content:flex-end }
   .modal button{
-    border:1px solid var(--accent);background:var(--accent);color:#fff;
-    padding:.65rem 1rem;border-radius:12px;font-weight:700;cursor:pointer;
+    border:1px solid var(--accent); background:var(--accent); color:#fff; padding:.65rem 1rem; border-radius:12px; font-weight:700; cursor:pointer;
   }
-  .modal button[disabled]{opacity:.45;cursor:not-allowed;}
-  .modal .cancel{background:#303b46;border-color:#303b46;}
-  .modal .cancel:hover{background:#3a4a58;}
+  .modal button[disabled]{ opacity:.45; cursor:not-allowed; }
+  .modal .cancel{ background:#303b46; border-color:#303b46; }
+  .modal .cancel:hover{ background:#3a4a58; }
 </style>
 </head>
 <body>
   <div class="bg" aria-hidden="true"></div>
 
   <main class="hero" role="main">
-    <header class="stack">
+    <header class="panel">
       <h1>Transformation. On demand.</h1>
       <p class="sub">
         We’ve combined the ancient wisdom embedded in Psilocybe mycelia with modern-day biotechnology and clinical precision to create a sacred offering to catalyze inner transformation on demand.
@@ -175,42 +181,61 @@
   </div>
 
 <script>
-  // Smooth scroll
+  // Smooth scroll for in-page links
   document.querySelectorAll('a[href^="#"]').forEach(a=>{
     a.addEventListener('click', e=>{
-      const id=a.getAttribute('href');
-      if(id.length>1){
-        const el=document.querySelector(id);
-        if(el){e.preventDefault();el.scrollIntoView({behavior:'smooth',block:'start'});}
+      const id = a.getAttribute('href');
+      if(id.length > 1){
+        const el = document.querySelector(id);
+        if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth', block:'start'}); }
       }
     });
   });
 
-  // Modal gate
-  const store=sessionStorage,keyAge='mendosyn_age_ok',keyJur='mendosyn_juris_ok';
-  const btn=document.getElementById('preorderBtn'),
-        backdrop=document.getElementById('gateBackdrop'),
-        ok=document.getElementById('gateOk'),
-        cancel=document.getElementById('gateCancel'),
-        age=document.getElementById('ageCheck'),
-        juris=document.getElementById('jurisCheck');
+  // Consent gate stored per session
+  const store = window.sessionStorage;
+  const keyAge = 'mendosyn_age_ok';
+  const keyJur = 'mendosyn_juris_ok';
 
-  function syncOk(){ok.disabled=!(age.checked&&juris.checked);}
-  age.addEventListener('change',syncOk);
-  juris.addEventListener('change',syncOk);
+  const btn = document.getElementById('preorderBtn');
+  const backdrop = document.getElementById('gateBackdrop');
+  const ok = document.getElementById('gateOk');
+  const cancel = document.getElementById('gateCancel');
+  const age = document.getElementById('ageCheck');
+  const juris = document.getElementById('jurisCheck');
 
-  function openGate(){backdrop.style.display='flex';backdrop.setAttribute('aria-hidden','false');age.checked=false;juris.checked=false;syncOk();}
-  function closeGate(){backdrop.style.display='none';backdrop.setAttribute('aria-hidden','true');}
+  function syncOk(){ ok.disabled = !(age.checked && juris.checked); }
+  age.addEventListener('change', syncOk);
+  juris.addEventListener('change', syncOk);
 
-  btn.addEventListener('click',()=>{
-    if(store.getItem(keyAge)==='1'&&store.getItem(keyJur)==='1'){location.href='preorder.html';return;}
+  function openGate(){
+    backdrop.style.display = 'flex';
+    backdrop.setAttribute('aria-hidden','false');
+    age.checked=false; juris.checked=false; syncOk();
+  }
+  function closeGate(){
+    backdrop.style.display = 'none';
+    backdrop.setAttribute('aria-hidden','true');
+  }
+
+  btn.addEventListener('click', function(){
+    if (store.getItem(keyAge) === '1' && store.getItem(keyJur) === '1') {
+      window.location.href = 'preorder.html';
+      return;
+    }
     openGate();
   });
-  cancel.addEventListener('click',closeGate);
-  ok.addEventListener('click',()=>{
-    store.setItem(keyAge,'1');store.setItem(keyJur,'1');closeGate();location.href='preorder.html';
+
+  cancel.addEventListener('click', closeGate);
+  ok.addEventListener('click', function(){
+    store.setItem(keyAge,'1');
+    store.setItem(keyJur,'1');
+    closeGate();
+    window.location.href = 'preorder.html';
   });
-  window.addEventListener('keydown',e=>{if(e.key==='Escape'&&backdrop.style.display==='flex')closeGate();});
+
+  // ESC to close
+  window.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && backdrop.style.display==='flex') closeGate(); });
 </script>
 </body>
 </html>
