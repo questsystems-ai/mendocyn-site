@@ -15,8 +15,8 @@
     --line:rgba(255,255,255,.18);
     --sa-top:env(safe-area-inset-top,0px);
     --sa-bot:env(safe-area-inset-bottom,0px);
-    --bg-top-offset:0px;   /* move background */
-    --card-top-offset:96px; /* move hero text block */
+    --bg-top-offset:0px;
+    --card-top-offset:96px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{height:100%}
@@ -67,7 +67,6 @@
     gap:.75rem;margin:1.25rem 0 0;
   }
 
-  /* unified button styling for <a> and <button> */
   .btn,
   .btn:visited,
   button.btn{
@@ -106,6 +105,16 @@
   }
   .about-copy h2{margin:0 0 .35rem;color:var(--accent);font-size:clamp(1.4rem,3vw,2rem);}
   .about-copy p{color:#e6e9ee;line-height:1.7;margin:.25rem 0 .65rem;}
+  .about-link{
+    margin-top:1rem;
+    font-size:1rem;
+    color:#cfd5da;
+  }
+  .about-link a{
+    color:var(--accent);
+    text-decoration:none;
+  }
+  .about-link a:hover{text-decoration:underline;}
   @media (max-width:820px){
     .about-inner{grid-template-columns:1fr;}
     .about-photo{max-width:360px;margin:0 auto;}
@@ -172,6 +181,7 @@
         <p>Dr. Bryan Quoc Le holds a Ph.D. in Food Science from the University of Wisconsin, Madison, where he studied how to harness enzymes from nature to produce plant medicines.</p>
         <p>The vision for Mendosyn Bio came to him during his time at Burning Man, when he was inspired by communities where humans could freely partake in the medicines to catalyze growth and transformation. He believes all people have the right to experience these time-honored medicines.</p>
         <p>He has published three patents and is in the process of publishing the latest patent for the technology that powers Mendosyn Bio.</p>
+        <p class="about-link">For more information about the author and a journey, <a href="journey.html">click here</a>.</p>
       </div>
     </div>
   </section>
@@ -192,7 +202,6 @@
   </div>
 
 <script>
-  // Smooth scroll
   document.querySelectorAll('a[href^="#"]').forEach(a=>{
     a.addEventListener('click',e=>{
       const id=a.getAttribute('href');
@@ -203,7 +212,6 @@
     });
   });
 
-  // Consent gate
   const store=sessionStorage,keyAge='mendosyn_age_ok',keyJur='mendosyn_juris_ok';
   const btn=document.getElementById('preorderBtn'),
         backdrop=document.getElementById('gateBackdrop'),
