@@ -6,15 +6,14 @@
 <title>Pre-order Mendosyn Enzyme Dose Kits</title>
 <meta name="description" content="Reserve a Mendosyn Enzyme Dose Kit box at a 50% discount. Fully refundable anytime before shipment.">
 <link rel="icon" href="/favicon.png">
-
-<!-- You can delete the next two lines to silence the @import DevTools warning entirely -->
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
-
 <style>
   :root{
     --bg:#000; --fg:#f5f5f7; --accent:#3aa0ff;
-    --panel:rgba(0,0,0,.65); --line:rgba(255,255,255,.18);
+    --panel:rgba(8,12,18,.68); --line:rgba(255,255,255,.18);
+    --sa-top: env(safe-area-inset-top, 0px);
+    --sa-bot: env(safe-area-inset-bottom, 0px);
   }
   *{box-sizing:border-box}
   html,body{height:100%}
@@ -22,45 +21,60 @@
     margin:0; background:var(--bg); color:var(--fg);
     font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
     -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
-    display:flex; align-items:center; justify-content:center;
   }
 
-  /* Full-bleed background layer (safer than styling <body>) */
-  .bg {
+  .bg{
     position: fixed; inset: 0; z-index: -1; pointer-events: none;
-    background: url('bg-desktop.jpg') top center/cover no-repeat;
+    background: url('bg-desktop.jpg') center/cover no-repeat;
+  }
+  .bg::after{
+    content:""; position:absolute; inset:0;
+    background:radial-gradient(120% 90% at 50% 10%, rgba(0,0,0,.2), rgba(0,0,0,.6) 60%, rgba(0,0,0,.8));
+  }
+  @media (max-width:640px){
+    .bg{ background-image: url('bg-mobile.jpg'); background-position:center top; }
   }
 
-  .wrap{
-    max-width:720px; padding:4rem 1.25rem; text-align:center;
-    background:rgba(0,0,0,.55); border-radius:20px;
+  /* Centered hero wrapper prevents vertical push-off */
+  .hero{
+    min-height:100svh;
+    display:grid; place-items:center;
+    padding:clamp(48px, 8vh, 96px) 16px;
+    padding-top: calc(var(--sa-top) + clamp(32px, 6vh, 72px));
+    padding-bottom: calc(var(--sa-bot) + clamp(28px, 6vh, 64px));
   }
-  h1{font-size:clamp(2rem,5vw,2.8rem); margin-bottom:1rem; color:var(--accent)}
-  p{color:#ddd; margin:.5rem auto 1rem; max-width:60ch; line-height:1.6}
+  .wrap{
+    width:min(740px, 100%);
+    background:var(--panel); border:1px solid var(--line); border-radius:18px;
+    padding:clamp(20px,3.5vw,28px); text-align:center;
+    box-shadow:0 12px 56px rgba(0,0,0,.35);
+  }
+  h1{font-size:clamp(1.9rem,4.6vw,2.6rem); margin:0 0 .75rem; color:var(--accent)}
+  p{color:#e3e9f2; margin:.45rem auto .9rem; max-width:66ch; line-height:1.65}
   strong{color:#fff}
   .btn{
-    display:inline-block; margin-top:1.25rem; padding:.9rem 1.6rem;
+    display:inline-block; margin-top:1.1rem; padding:.9rem 1.35rem;
     background:var(--accent); color:#fff; font-weight:700; border-radius:999px;
-    text-decoration:none; transition:background .2s ease;
+    text-decoration:none; transition:background .2s ease, transform .2s ease, box-shadow .2s ease;
     border:1px solid var(--accent);
   }
-  .btn:hover{background:#5bb6ff}
-  .note{font-size:.9rem; color:#aaa; margin-top:1.5rem; line-height:1.4}
+  .btn:hover{background:#5bb6ff; transform:translateY(-1px); box-shadow:0 0 20px rgba(58,160,255,.4)}
+  .note{font-size:.95rem; color:#c8d0db; margin-top:1.25rem; line-height:1.5}
   a.mail{color:var(--accent); text-decoration:none}
   a.mail:hover{text-decoration:underline}
 
-  /* Modal */
+  /* Modal Gate (reaffirm if session missing) */
   .modal-backdrop{
     position:fixed; inset:0; display:none; align-items:center; justify-content:center; z-index:10;
-    background: rgba(0,0,0,.55);
+    background: rgba(0,0,0,.58); padding:16px;
   }
   .modal{
-    width:min(720px, 92vw); background:var(--panel); border:1px solid var(--line);
-    border-radius:18px; padding:1.25rem; backdrop-filter:saturate(120%) blur(6px);
+    width:min(720px, 100%); background:rgba(12,18,28,.9); border:1px solid var(--line);
+    border-radius:18px; padding:16px; backdrop-filter:saturate(120%) blur(6px);
   }
-  .modal h2{ margin:.25rem 0 .5rem; font-size:1.25rem; }
-  .checks{ display:grid; gap:.5rem; text-align:left; margin:.75rem 0 1rem; }
-  .checks label{ display:flex; gap:.6rem; align-items:flex-start; line-height:1.4; cursor:pointer; }
+  .modal h2{ margin:.25rem 0 .6rem; font-size:1.25rem; }
+  .checks{ display:grid; gap:.55rem; text-align:left; margin:.75rem 0 1rem; }
+  .checks label{ display:flex; gap:.6rem; align-items:flex-start; line-height:1.5; cursor:pointer; }
   .modal-cta{ display:flex; gap:.6rem; flex-wrap:wrap; justify-content:flex-end }
   .modal button{
     border:1px solid var(--accent); background:var(--accent); color:#fff;
@@ -69,18 +83,12 @@
   .modal button[disabled]{ opacity:.45; cursor:not-allowed; }
   .modal .cancel{ background:#303b46; border-color:#303b46; }
   .modal .cancel:hover{ background:#3a4a58; }
-
-  /* Media queries last (best practice) */
-  @media (max-width:640px){
-    .bg{ background-image: url('bg-mobile.jpg'); background-position:center top; }
-  }
 </style>
 </head>
 <body>
-  <!-- Background -->
   <div class="bg" aria-hidden="true"></div>
 
-  <!-- Gate Modal -->
+  <!-- Consent re-check (only shown if session flags missing) -->
   <div class="modal-backdrop" id="gateBackdrop" role="dialog" aria-modal="true" aria-labelledby="gateTitle" aria-hidden="true">
     <div class="modal">
       <h2 id="gateTitle">Please confirm before continuing</h2>
@@ -95,27 +103,30 @@
     </div>
   </div>
 
-  <div class="wrap" id="content" style="visibility:hidden">
-    <h1>Pre-Order Our Sacred Offering Kits by Mendosyn Bio</h1>
-    <p>Reserve your first-edition <strong>box of 10 enzyme dose kits</strong> at a <strong>50% introductory discount of $250</strong>.</p>
-    <p>Our kits contain the enzymes and precisely dosed naturally-sourced ingredients needed, when combined, to give you the exact altered states of consciousness evolved by the Psilocybe family.</p>
-    <p>Delivery expected within six months — fully refundable anytime before shipment.</p>
-    <p><strong>Available only in jurisdictions where personal psilocybin use has been decriminalized.</strong></p>
+  <main class="hero">
+    <div class="wrap" id="content" style="visibility:hidden">
+      <h1>Pre-Order Our Sacred Offering Kits by Mendosyn Bio</h1>
+      <p>Reserve your first-edition <strong>box of 10 enzyme dose kits</strong> at a <strong>50% introductory discount of $250</strong>.</p>
+      <p>Our kits contain the enzymes and precisely dosed naturally-sourced ingredients needed, when combined, to give you the exact altered states of consciousness evolved by the Psilocybe family.</p>
+      <p>Delivery expected within six months — fully refundable anytime before shipment.</p>
+      <p><strong>Available only in jurisdictions where personal psilocybin use has been decriminalized.</strong></p>
 
-    <!-- Temporary: Stripe Payment Link (works without code) -->
-    <a class="btn" href="https://buy.stripe.com/28E8wR1ug26794R1vE48000" target="_blank" rel="noopener noreferrer">Pre-order Now $250</a>
+      <!-- Keep your temporary Stripe Payment Link; switch to /api/create-checkout-session when ready -->
+      <a class="btn" href="https://buy.stripe.com/28E8wR1ug26794R1vE48000" target="_blank" rel="noopener noreferrer">Pre-order Now $250</a>
 
-    <div class="note">
-      Funds are reserved by Mendosyn Bio for fulfillment of your order and may be refunded at any time prior to shipment.
-      If fulfillment is delayed beyond six months, payment will be refunded automatically.
+      <div class="note">
+        Funds are reserved by Mendosyn Bio for fulfillment of your order and may be refunded at any time prior to shipment.
+        If fulfillment is delayed beyond six months, payment will be refunded automatically.
+      </div>
+
+      <div class="note">
+        Questions? <a class="mail" href="mailto:bryan@mendosynbio.com">bryan@mendosynbio.com</a> • <a class="mail" href="index.html">← Back to home</a>
+      </div>
     </div>
-
-    <div class="note">
-      Questions? <a class="mail" href="mailto:bryan@mendosynbio.com">bryan@mendosynbio.com</a> • <a class="mail" href="index.html">← Back to home</a>
-    </div>
-  </div>
+  </main>
 
 <script>
+  // Session-based gate (same keys as index)
   const store = window.sessionStorage;
   const keyAge = 'mendosyn_age_ok';
   const keyJur = 'mendosyn_juris_ok';
@@ -128,8 +139,8 @@
   const content = document.getElementById('content');
 
   function syncOk(){ ok.disabled = !(age.checked && juris.checked); }
-  age.addEventListener('change', syncOk);
-  juris.addEventListener('change', syncOk);
+  age && age.addEventListener('change', syncOk);
+  juris && juris.addEventListener('change', syncOk);
 
   function openGate(){
     backdrop.style.display = 'flex';
@@ -141,16 +152,12 @@
     backdrop.setAttribute('aria-hidden','true');
   }
 
-  // Show content only if previously accepted in this session
   const accepted = (store.getItem(keyAge)==='1' && store.getItem(keyJur)==='1');
-  if (accepted){
-    content.style.visibility = 'visible';
-  } else {
-    openGate();
-  }
+  if (accepted){ content.style.visibility = 'visible'; }
+  else { openGate(); }
 
-  cancel.addEventListener('click', ()=>{ window.location.href = 'index.html'; });
-  ok.addEventListener('click', ()=>{
+  cancel && cancel.addEventListener('click', ()=>{ window.location.href = 'index.html'; });
+  ok && ok.addEventListener('click', ()=>{
     store.setItem(keyAge,'1');
     store.setItem(keyJur,'1');
     closeGate();
