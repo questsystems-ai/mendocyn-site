@@ -120,6 +120,7 @@
     .about-photo{max-width:360px;margin:0 auto;}
   }
 
+  /* Modal */
   .modal-backdrop{
     position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:10;
     background:rgba(0,0,0,.58);padding:16px;
@@ -133,9 +134,35 @@
     backdrop-filter:saturate(120%) blur(6px);
   }
   .modal h2{margin:.25rem 0 .6rem;font-size:1.25rem;}
-  .checks{display:grid;gap:.55rem;text-align:left;margin:.75rem 0 1rem;}
-  .checks label{display:flex;gap:.6rem;align-items:flex-start;line-height:1.5;cursor:pointer;}
-  .modal-cta{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:flex-end;}
+
+  /* ✅ Single-column, full-width checkbox text; no CSS multicolumns */
+  .checks{
+    display:flex;
+    flex-direction:column;
+    gap:.75rem;
+    column-count:1;      /* guard against any inherited multi-col */
+    column-width:auto;   /* guard */
+  }
+  .checks label{
+    display:grid;
+    grid-template-columns:auto 1fr; /* checkbox | text */
+    align-items:start;
+    gap:.6rem;
+    width:100%;
+  }
+  .checks input{
+    margin-top:.15rem;
+  }
+  .checks .check-text{
+    display:block;
+    white-space:normal;    /* allow natural wrapping */
+    overflow-wrap:anywhere;
+    word-break:normal;
+  }
+
+  .modal-cta{
+    display:flex;gap:.6rem;flex-wrap:wrap;justify-content:flex-end;
+  }
   .modal button{
     border:1px solid var(--accent);
     background:var(--accent);
@@ -191,8 +218,14 @@
     <div class="modal">
       <h2 id="gateTitle">Please confirm before continuing</h2>
       <div class="checks">
-        <label><input type="checkbox" id="ageCheck"> I am <strong>18 years or older</strong>.</label>
-        <label><input type="checkbox" id="jurisCheck"> I understand this product <strong>cannot be shipped to all jurisdictions</strong>.</label>
+        <label class="check">
+          <input type="checkbox" id="ageCheck">
+          <span class="check-text">I am <strong>18 years or older.</strong></span>
+        </label>
+        <label class="check">
+          <input type="checkbox" id="jurisCheck">
+          <span class="check-text">I understand this product <strong>cannot be shipped to all jurisdictions.</strong></span>
+        </label>
       </div>
       <div class="modal-cta">
         <button class="cancel" id="gateCancel" type="button">Cancel</button>
