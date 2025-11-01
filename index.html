@@ -17,7 +17,7 @@
     --sa-bot: env(safe-area-inset-bottom, 0px);
 
     /* Push background image down */
-    --bg-top-offset: clamp(12px, 10vh, 100px);
+    --bg-top-offset: 56px;
     /* Push hero text further down than bg for clearance */
     --hero-shift: calc(var(--bg-top-offset) * 1.25);
   }
@@ -32,7 +32,7 @@
   /* Background layer */
   .bg{
     position:fixed; inset:0; z-index:-1; pointer-events:none;
-    background:url('bg-desktop.jpg') center var(--bg-top-offset)/cover no-repeat;
+    background: url('bg-desktop.jpg') center var(--bg-top-offset) / cover no-repeat;
   }
   @media (max-width:640px), (orientation:portrait){
     .bg{ background-image:url('bg-mobile.jpg'); }
