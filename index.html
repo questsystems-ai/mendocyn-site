@@ -135,34 +135,40 @@
   }
   .modal h2{margin:.25rem 0 .6rem;font-size:1.25rem;}
 
-  /* ✅ Single-column, full-width checkbox text; no CSS multicolumns */
+  /* Single-column, full-width checkbox text */
   .checks{
     display:flex;
     flex-direction:column;
     gap:.75rem;
-    column-count:1;      /* guard against any inherited multi-col */
-    column-width:auto;   /* guard */
+    column-count:1;
+    column-width:auto;
   }
   .checks label{
     display:grid;
-    grid-template-columns:auto 1fr; /* checkbox | text */
+    grid-template-columns:auto 1fr;
     align-items:start;
     gap:.6rem;
     width:100%;
   }
-  .checks input{
-    margin-top:.15rem;
-  }
+  .checks input{ margin-top:.15rem; }
   .checks .check-text{
     display:block;
-    white-space:normal;    /* allow natural wrapping */
+    white-space:normal;
     overflow-wrap:anywhere;
     word-break:normal;
   }
 
+  /* ✅ Center buttons + add a little pad on mobile */
   .modal-cta{
-    display:flex;gap:.6rem;flex-wrap:wrap;justify-content:flex-end;
+    display:flex;
+    gap:.6rem;
+    flex-wrap:wrap;
+    justify-content:center; /* centered on all screens */
   }
+  @media (max-width:640px){
+    .modal-cta{ margin-top:12px; } /* mobile padding between text and buttons */
+  }
+
   .modal button{
     border:1px solid var(--accent);
     background:var(--accent);
