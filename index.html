@@ -12,9 +12,13 @@
 <style>
   :root{
     --bg:#000; --fg:#f5f5f7; --accent:#3aa0ff;
-    --panel: rgba(8,12,18,.68); --line: rgba(255,255,255,.18);
+    --line: rgba(255,255,255,.18);
     --sa-top: env(safe-area-inset-top, 0px);
     --sa-bot: env(safe-area-inset-bottom, 0px);
+
+    /* How much to push the background image DOWN from the very top of the window
+       so it's not hidden under browser chrome / URL capsule on mobile/desktop. */
+    --bg-top-offset: clamp(32px, 10vh, 160px);
   }
   *{ box-sizing:border-box }
   html, body { height: 100% }
@@ -24,47 +28,50 @@
     -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
   }
 
-  /* Fixed background layer so content never affects the image */
+  /* Fixed background layer; we offset its Y position so the image's top is visible. */
   .bg{
     position:fixed; inset:0; z-index:-1; pointer-events:none;
-    background:url('bg-desktop.jpg') center/cover no-repeat;
+    background:url('bg-desktop.jpg') center var(--bg-top-offset) / cover no-repeat;
   }
   @media (max-width:640px), (orientation:portrait){
-    .bg{ background-image:url('bg-mobile.jpg'); background-position:center top }
+    .bg{ background-image:url('bg-mobile.jpg'); }
   }
   .bg::after{
-    /* Subtle darkening so white text stays readable on any crop */
+    /* Keep copy readable without any visible card */
     content:""; position:absolute; inset:0;
-    background:radial-gradient(120% 90% at 50% 10%, rgba(0,0,0,.15), rgba(0,0,0,.55) 60%, rgba(0,0,0,.75));
+    background:radial-gradient(120% 90% at 50% 10%, rgba(0,0,0,.08), rgba(0,0,0,.55) 60%, rgba(0,0,0,.78));
   }
 
-  /* HERO — grid-centered and immune to wrapping pushing it off-screen */
+  /* HERO — top-aligned stack so we "pretend" there's a card pushing content down,
+     but show NO panel/border/background. */
   .hero{
-    min-height:100svh; /* small viewport unit = stable on mobile */
-    display:grid; place-items:center;
-    padding:clamp(48px, 8vh, 96px) 16px;
-    padding-top: calc(var(--sa-top) + clamp(32px, 6vh, 72px));
+    min-height:100svh;
+    display:grid;
+    align-content:start;
+    justify-items:center;
+    gap:0;
+    padding-left:16px; padding-right:16px;
+    padding-top: calc(var(--sa-top) + var(--bg-top-offset));
     padding-bottom: calc(var(--sa-bot) + clamp(28px, 6vh, 64px));
   }
-  .panel{
+
+  /* Ghost container (no visual chrome at all) */
+  .stack{
     width:min(1080px, 100%);
-    border:1px solid var(--line);
-    background:var(--panel);
-    backdrop-filter:saturate(120%) blur(6px);
-    border-radius:18px;
-    padding:clamp(20px, 3.5vw, 28px);
+    /* no background, no border, purely layout */
+    padding: clamp(20px, 3.5vw, 28px);
     text-align:center;
-    box-shadow:0 12px 60px rgba(0,0,0,.35);
   }
+
   h1{
     color:#fff; font-size:clamp(2rem, 5vw, 3.5rem); line-height:1.075;
     margin:0 0 .5rem;
-    text-shadow:0 2px 18px rgba(0,0,0,.35);
+    text-shadow:0 3px 22px rgba(0,0,0,.45), 0 0 1px rgba(0,0,0,.6);
   }
   .sub{
     color:#eaf0f6; font-size:clamp(1rem, 2.1vw, 1.2rem);
-    margin:.5rem auto 0; max-width:58ch; line-height:1.65;
-    text-shadow:0 1px 12px rgba(0,0,0,.35);
+    margin:.5rem auto 0; max-width:58ch; line-height:1.7;
+    text-shadow:0 2px 16px rgba(0,0,0,.45);
   }
   .cta{
     display:flex; gap:.75rem; flex-wrap:wrap; justify-content:center; margin:1.25rem 0 0;
@@ -79,7 +86,7 @@
   .btn.secondary:hover{ background:#245477; box-shadow:0 0 20px rgba(58,160,255,.25); }
   @media (prefers-reduced-motion: reduce){ .btn{ transition:none } }
 
-  /* About */
+  /* About section unchanged, but with no panel to keep the image visible */
   .about{
     padding: clamp(48px, 9vh, 96px) 16px;
     background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,.65) 60%, rgba(0,0,0,.85) 100%);
@@ -127,7 +134,7 @@
   <div class="bg" aria-hidden="true"></div>
 
   <main class="hero" role="main">
-    <header class="panel">
+    <header class="stack">
       <h1>Transformation. On demand.</h1>
       <p class="sub">
         We’ve combined the ancient wisdom embedded in Psilocybe mycelia with modern-day biotechnology and clinical precision to create a sacred offering to catalyze inner transformation on demand.
