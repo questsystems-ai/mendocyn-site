@@ -110,10 +110,7 @@
     font-size:1rem;
     color:#cfd5da;
   }
-  .about-link a{
-    color:var(--accent);
-    text-decoration:none;
-  }
+  .about-link a{color:var(--accent);text-decoration:none;}
   .about-link a:hover{text-decoration:underline;}
   @media (max-width:820px){
     .about-inner{grid-template-columns:1fr;}
@@ -150,7 +147,7 @@
     gap:.6rem;
     width:100%;
   }
-  .checks input{ margin-top:.15rem; }
+  .checks input{margin-top:.15rem;}
   .checks .check-text{
     display:block;
     white-space:normal;
@@ -158,15 +155,13 @@
     word-break:normal;
   }
 
-  /* ✅ Center buttons + add a little pad on mobile */
+  /* ✅ Center buttons + padding on all screens */
   .modal-cta{
     display:flex;
     gap:.6rem;
     flex-wrap:wrap;
-    justify-content:center; /* centered on all screens */
-  }
-  @media (max-width:640px){
-    .modal-cta{ margin-top:12px; } /* mobile padding between text and buttons */
+    justify-content:center;
+    margin-top:16px; /* adds space between text and buttons */
   }
 
   .modal button{
