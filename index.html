@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mendosyn Bio — Coming Soon</title>
+<link rel="icon" href="/favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --accent: #3aa0ff;
+    --fg: #f5f5f7;
+    --bg1:#02040a; --bg2:#08121c; --bg3:#0d1f33;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    height:100vh;
+    width:100vw;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:Inter,system-ui,sans-serif;
+    background:linear-gradient(130deg,var(--bg1),var(--bg2),var(--bg3));
+    background-size:200% 200%;
+    animation:gradientMove 12s ease-in-out infinite;
+    color:var(--fg);
+    text-align:center;
+    padding:24px;
+  }
+
+  @keyframes gradientMove {
+    0% { background-position:0% 50%; }
+    50% { background-position:100% 50%; }
+    100% { background-position:0% 50%; }
+  }
+
+  .container {
+    max-width:700px;
+    animation:fadeIn 1.4s ease forwards;
+    opacity:0;
+  }
+
+  @keyframes fadeIn {
+    from { opacity:0; transform:translateY(18px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+
+  .logo {
+    width:180px;
+    margin:0 auto 1.6rem auto;
+    display:block;
+    filter:drop-shadow(0 0 28px rgba(58,160,255,0.45));
+  }
+
+  h1 {
+    font-size:clamp(2.2rem,5vw,3.4rem);
+    font-weight:700;
+    margin-bottom:.5rem;
+  }
+
+  p {
+    font-size:clamp(1rem,1.8vw,1.2rem);
+    opacity:.85;
+    margin-bottom:2rem;
+    line-height:1.6;
+  }
+
+  .btn {
+    display:inline-block;
+    padding:0.85rem 1.4rem;
+    border-radius:999px;
+    background:var(--accent);
+    color:#fff;
+    font-weight:600;
+    text-decoration:none;
+    letter-spacing:0.01em;
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+
+  .btn:hover {
+    transform:translateY(-2px);
+    box-shadow:0 0 20px rgba(58,160,255,0.45);
+  }
+
+  footer {
+    position:absolute;
+    bottom:16px;
+    width:100%;
+    text-align:center;
+    opacity:0.34;
+    font-size:0.85rem;
+  }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- ⭐ Replace the src below with your actual image file -->
+  <img src="/images/mendosyn-symbol.png"
+       alt="Mendosyn Bio Symbol"
+       class="logo">
+
+  <h1>Mendosyn Bio</h1>
+
+  <p>Begin your journey here.</p>
+
+  <a class="btn" href="mailto:bryan@mendosynbio.com">Contact Us</a>
+
+</div>
+
+<footer>&copy; 2025 Mendosyn Bio</footer>
+
+</body>
+</html>
